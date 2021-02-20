@@ -19,6 +19,11 @@ def meetingDetail(request, id):
     meeting=get_object_or_404(Meeting, pk=id)
     return render(request, 'tech/meetingdetail.html', {'meeting' : meeting})
 
+def resourcesDetail(request, id):
+    resources=get_object_or_404(Resources, pk=id)
+    return render(request, 'tech/resourcesdetail.html', {'resources':resources})
+
+
 def newMeeting(request):
     form=MeetingForm
 
