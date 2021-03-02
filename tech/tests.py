@@ -71,3 +71,14 @@ class NewMeetingForm(TestCase):
         }
         form=MeetingForm(data)
         self.assertFalse(form.is_valid())
+
+class New_Resource_Authentication_Test(TestCase):
+    def setUp(self):
+        self.test_user=User.objects.create_user(username='testuser1', password='Thanhtuan123')
+        self.meeting=Meeting.objects.create(meetingtitle='Game Day')
+        self.resource=Resources.objects.create(resourcename= self.meeting, resourcetype='Corsair', url='https://www.corsair.com/us/en/', dateentered='2021-02-04', userid=self.test_user, description='good keyboard')
+        self.event=Event.objects.create(eventtitle=self.meeting, eventlocation='Room 1110', eventdate='2021-01-04', eventtime='18:00', eventdescription='Playing game', eventuserid=self.test_user)
+
+    def test_redirect_if_not_logged_in(self):
+        response=self.client.get(reverse('newresource'))
+        self.assertRedirects(response, '/accounts/login/?next=/tech/newresource/')
